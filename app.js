@@ -51,7 +51,7 @@ app.get(
   }
 );
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("Hello coder... you have reached the fibonacci server 😈");
 });
 app.get(
   "/getFibonacciResults",
