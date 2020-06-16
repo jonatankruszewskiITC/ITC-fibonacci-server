@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors = require('cors');
+const cors = require("cors");
 
 app.use(cors());
 
-const Datastore = require('nedb');
-const db = new Datastore({ filename: './storage.db' });
+const Datastore = require("nedb");
+const db = new Datastore({ filename: "./storage.db" });
 db.loadDatabase();
 
 function fibonacci(n, memo) {
@@ -22,42 +22,50 @@ function fibonacci(n, memo) {
 function wait(time) {
   return new Promise((resolve) => {
     setTimeout(resolve, time);
-  })
+  });
 }
 
-app.get('https://itcfiboserver.herokuapp.com/fibonacci/:number', async (req, res) => {
-  await wait(600);
-  const number = +req.params.number;
-  if (number === 42) {
-    return res.status(400).send('42 is the meaning of life');
-  }
-  if (number > 50) {
-    return res.status(400).send("number can't be bigger than 50");
-  }
-  if (number < 1) {
-    return res.status(400).send("number can't be smaller than 1");
-  }
-  const result = fibonacci(number);
-  const obj = { number, result, createdDate: Date.now() };
-  db.insert(obj, (err) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.send(obj);
+app.get(
+  "https://itcfiboserver.herokuapp.com/fibonacci/:number",
+  async (req, res) => {
+    await wait(600);
+    const number = +req.params.number;
+    if (number === 42) {
+      return res.status(400).send("42 is the meaning of life");
     }
-  });
-});
-
-app.get("https://itcfiboserver.herokuapp.com/getFibonacciResults", async (req, res) => {
-  await wait(600);
-  db.find({}, (err, docs) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.send({ results: docs });
+    if (number > 50) {
+      return res.status(400).send("number can't be bigger than 50");
     }
-  });
+    if (number < 1) {
+      return res.status(400).send("number can't be smaller than 1");
+    }
+    const result = fibonacci(number);
+    const obj = { number, result, createdDate: Date.now() };
+    db.insert(obj, (err) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.send(obj);
+      }
+    });
+  }
+);
+app.get("/", (req, res) => {
+  res.send("Hello World");
 });
+app.get(
+  "/getFibonacciResults",
+  async (req, res) => {
+    await wait(600);
+    db.find({}, (err, docs) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.send({ results: docs });
+      }
+    });
+  }
+);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
