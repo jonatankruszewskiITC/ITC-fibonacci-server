@@ -59,8 +59,8 @@ app.get("https://itcfiboserver.herokuapp.com/getFibonacciResults", async (req, r
   });
 });
 
-const PORT = 5050;
-app.listen(5050, () => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
   console.log("Press Ctrl+C to quit.");
 });
