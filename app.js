@@ -26,7 +26,7 @@ function wait(time) {
 }
 
 app.get(
-  "https://itcfiboserver.herokuapp.com/fibonacci/:number",
+  "/fibonacci/:number",
   async (req, res) => {
     await wait(600);
     const number = +req.params.number;
