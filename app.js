@@ -25,7 +25,7 @@ function wait(time) {
   })
 }
 
-app.get('/fibonacci/:number', async (req, res) => {
+app.get('https://itcfiboserver.herokuapp.com/fibonacci/:number', async (req, res) => {
   await wait(600);
   const number = +req.params.number;
   if (number === 42) {
@@ -48,7 +48,7 @@ app.get('/fibonacci/:number', async (req, res) => {
   });
 });
 
-app.get("/getFibonacciResults", async (req, res) => {
+app.get("https://itcfiboserver.herokuapp.com/getFibonacciResults", async (req, res) => {
   await wait(600);
   db.find({}, (err, docs) => {
     if (err) {
