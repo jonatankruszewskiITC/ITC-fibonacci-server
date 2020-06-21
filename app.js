@@ -13,6 +13,9 @@ function fibonacci(n, memo) {
   if (n in memo) {
     return memo[n];
   }
+   if (n ===0) {
+    return 0;
+  }
   if (n <= 1) {
     return 1;
   }
@@ -53,6 +56,7 @@ app.get(
 app.get("/", (req, res) => {
   res.send("Hello coder... you have reached the fibonacci server 😈");
 });
+
 app.get(
   "/getFibonacciResults",
   async (req, res) => {
